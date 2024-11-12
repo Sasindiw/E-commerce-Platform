@@ -1,9 +1,11 @@
 import { Card } from "./components/ui/card";
 import { Button } from "./components/ui/button";
+import { useState } from "react";
 
 function ProductCard(props) {
+  const [num, setNum] = useState(0);
   const handleClick = () => {
-    alert(`Buy ${props.name}`);
+    setNum(num + 1);
   };
 
   return (
@@ -15,6 +17,7 @@ function ProductCard(props) {
         <h2 className="text-lg font-semibold ">{props.name}</h2>
 
         <span className="text-base font-medium">{props.price}</span>
+        <p>{num}</p>
       </div>
       <div className="px-4 mt-2">
         <p className="text-sm">{props.desc}</p>
