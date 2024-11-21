@@ -1,4 +1,7 @@
+import { Separator } from "@/components/ui/separator";
 import ProductCards from "./ProductCards";
+import Tab from "./Tab";
+import { useState } from "react";
 
 function Products() {
   const products = [
@@ -11,7 +14,7 @@ function Products() {
       desc: "AirPods Max delivers immersive sound with active noise cancellation, spatial audio, and a premium over-ear design for an exceptional listening experience.",
     },
     {
-      categoryId: "2",
+      categoryId: "5",
       image: "/assets/products/applewatch.png",
       _id: "2",
       name: "Apple Watch",
@@ -19,7 +22,7 @@ function Products() {
       desc: "Apple Watch offers seamless connectivity, health tracking, and fitness features in a sleek design, helping you stay connected and active throughout the day.",
     },
     {
-      categoryId: "3",
+      categoryId: "4",
       image: "/assets/products/iphone15.png",
       _id: "3",
       name: "iphone 15",
@@ -35,7 +38,7 @@ function Products() {
       desc: "Google Pixel 8 offers a powerful camera, vibrant display, and AI features for an exceptional Android experience with fast performance.",
     },
     {
-      categoryId: "5",
+      categoryId: "3",
       image: "/assets/products/echodot.png",
       _id: "5",
       name: "Echo Dot",
@@ -43,7 +46,7 @@ function Products() {
       desc: "A compact smart speaker with Alexa, offering voice control for music, smart home devices, and hands-free assistance.",
     },
     {
-      categoryId: "6",
+      categoryId: "2",
       image: "/assets/products/googlepixelbuds.png",
       _id: "6",
       name: "Galaxy Pixel Buds",
@@ -51,7 +54,7 @@ function Products() {
       desc: "True wireless earbuds with high-quality sound, seamless Android integration, and built-in Google Assistant.",
     },
     {
-      categoryId: "7",
+      categoryId: "6",
       image: "/assets/products/maccbookpro.png",
       _id: "7",
       name: "Apple MaccBook Pro 16",
@@ -59,18 +62,54 @@ function Products() {
       desc: "A high-performance laptop with the M3 chip, stunning display, and long battery life, perfect for professionals.",
     },
     {
-      categoryId: "8",
+      categoryId: "6",
       image: "/assets/products/googlenesthub.png",
       _id: "8",
-      name: "Google Nest Hub (2nd gen)",
+      name: "Google Nest Hub",
       price: "$400.00",
       desc: "A smart display with voice control, improved sound, and sleep tracking, ideal for managing your smart home.",
     },
   ];
+
+  const categories = [
+    { _id: "ALL", name: "ALL" },
+    { _id: "1", name: "Headphones" },
+    { _id: "2", name: "Earbuds" },
+    { _id: "3", name: "Speakers" },
+    { _id: "4", name: "Mobile Phones" },
+    { _id: "5", name: "Smart Watch" },
+    { _id: "6", name: "Laptops" },
+  ];
+
+  const [selectedCategoryId, setSelectedCategoryId] = useState("1");
+  const filteredProducts =
+    selectedCategoryId === "ALL"
+      ? products
+      : products.filter((product) => product.categoryId === selectedCategoryId);
+
+  const handleTabClick = (_id) => {
+    setSelectedCategoryId(_id);
+  };
+
   return (
     <section className="px-8 py-8">
       <h2 className="text-4xl font-bold mb-7">Our Top Products</h2>
-      <ProductCards products={products} />
+
+      <Separator className="mt-2" />
+
+      <div className="mt-4 mb-4 flex items-center gap-4">
+        {categories.map((category) => (
+          <Tab
+            key={category._id}
+            _id={category._id}
+            selectedCategoryId={selectedCategoryId}
+            name={category.name}
+            onTabClick={handleTabClick}
+          />
+        ))}
+      </div>
+
+      <ProductCards products={filteredProducts} />
     </section>
   );
 }
